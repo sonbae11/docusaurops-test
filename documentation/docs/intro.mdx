@@ -1,0 +1,234 @@
+---
+description: "Home page"
+title: "Project Overview"
+slug: /
+sidebar_position: 1
+page_type: home
+---
+
+import Head from '@docusaurus/Head';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+
+<Head>
+  <meta name="docusaurOpsPageType" property="docusaurOpsPageType" content="site_home" />
+</Head>
+
+export const Value = ({name}) => {
+  const {siteConfig} = useDocusaurusContext();
+  const meta = Object.fromEntries(
+    (siteConfig.themeConfig?.metadata || []).map(m => [m.name, m.content])
+  );
+  const map = { title: siteConfig.title, tagline: siteConfig.tagline, ...meta };
+  return <>{map[name] || ''}</>;
+};
+
+export const TechBadges = () => {
+  const {siteConfig} = useDocusaurusContext();
+  const techs = (siteConfig.themeConfig?.metadata || [])
+    .find(m => m.name === 'docusaurOpsProjectTechnologies')?.content || '';
+  const items = techs.split(',').map(t => t.trim()).filter(Boolean);
+  if (!items.length) return null;
+  return (
+    <div className="flex flex-wrap gap-2 justify-center mt-2">
+      {items.map((t, i) => (
+        <span key={i} className="px-3 py-1 rounded-full text-sm font-mono font-semibold"
+          style={{background:'var(--ifm-color-primary-lightest)', color:'var(--ifm-color-primary-darkest)'}}>
+          {t}
+        </span>
+      ))}
+    </div>
+  );
+};
+
+export const MetaLink = ({name, label, fallback, className, style}) => {
+  const {siteConfig} = useDocusaurusContext();
+  const meta = Object.fromEntries(
+    (siteConfig.themeConfig?.metadata || []).map(m => [m.name, m.content])
+  );
+  const url = meta[name];
+  if (!url) return <span className="opacity-40 italic">{fallback || '—'}</span>;
+  return <a href={url} target="_blank" rel="noopener noreferrer" className={className} style={style}>{label || url}</a>;
+};
+
+export const StatusBadge = ({label, color}) => (
+  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold"
+    style={{background: color + '22', color: color, border: `1px solid ${color}55`}}>
+    <span className="w-1.5 h-1.5 rounded-full inline-block" style={{background: color}}></span>
+    {label}
+  </span>
+);
+
+{/* ==========================================================
+    PAGE CONFIGURATION — fill out this block to populate the page.
+    All placeholder values are defined here and referenced below.
+    ========================================================== */}
+export const PAGE_CONFIG = {
+  // ── Links ──────────────────────────────────────────────
+  architectureUrl:  '#',               // URL to architecture document
+  stagingUrl:       '#',               // Staging environment URL
+  stagingLabel:     'staging.example.com',
+  productionUrl:    '#',               // Production environment URL
+  productionLabel:  'example.com',
+
+  // ── Objective ──────────────────────────────────────────
+  objectiveDescription: 'Describe the project objective here. What is the expected outcome? What are the key deliverables and success criteria?',
+  goals: [
+    { title: 'Goal 1', description: 'Describe the first key goal or deliverable for this project.' },
+    { title: 'Goal 2', description: 'Describe the second key goal or deliverable for this project.' },
+    { title: 'Goal 3', description: 'Describe the third key goal or deliverable for this project.' },
+  ],
+
+  // ── Team — Leadership ──────────────────────────────────
+  productOwner:    '<Name>',
+  projectManager:  '<Name>',
+
+  // ── Team — Technical ───────────────────────────────────
+  solutionArchitect: '<Name>',
+  leadDeveloper:     '<Name>',
+  developers:        '<Name(s)>',
+  qaTester:          '<Name>',
+  devOpsEngineer:    '<Name>',
+};
+
+<div className="not-prose">
+
+{/* ── Header note ─────────────────────────────────────────────────── */}
+<div className="rounded-xl px-6 py-4 text-sm flex items-center gap-3 mb-10"
+  style={{background:'rgba(32,201,151,0.08)', border:'1px solid rgba(32,201,151,0.25)', color:'var(--ifm-font-color-secondary)'}}>
+  <span className="text-xl">ℹ️</span>
+  <span>This site is powered by the <strong>DocusaurOps platform</strong>. Replace the placeholder values above with your actual project information and refer to the sidebar for additional pages.</span>
+</div>
+
+{/* ── Hero ────────────────────────────────────────────────────────── */}
+<div className="relative overflow-hidden rounded-2xl mb-10 px-8 py-16 text-center"
+  style={{background:'linear-gradient(135deg, #070c1e 0%, #0d2040 50%, #071a2a 100%)'}}>
+  <div className="absolute inset-0 opacity-10"
+    style={{backgroundImage:'radial-gradient(circle at 20% 50%, #20c997 0%, transparent 50%), radial-gradient(circle at 80% 20%, #41d3a8 0%, transparent 40%)'}} />
+  <div className="relative z-10">
+    <div className="flex justify-center mb-6">
+      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold"
+        style={{background:'rgba(32,201,151,0.15)', color:'#41d3a8', border:'1px solid rgba(32,201,151,0.35)'}}>
+        <span>📄</span> Project Documentation
+      </div>
+    </div>
+    <h1 className="text-5xl font-extrabold mb-4 leading-tight" style={{color:'#f8fbff', fontFamily:'Space Grotesk, sans-serif'}}>
+      <Value name="title" />
+    </h1>
+    <div className="text-xl max-w-2xl mx-auto mb-8" style={{color:'#b6c2de'}}>
+      <Value name="docusaurOpsProjectDescription" />
+    </div>
+    <TechBadges />
+    <div className="flex flex-wrap gap-3 justify-center mt-8">
+      <a href="#overview"
+        className="inline-flex items-center justify-center text-center px-6 py-2.5 rounded-lg font-semibold text-white no-underline transition-opacity hover:opacity-90"
+        style={{background:'linear-gradient(90deg,#20c997,#17a57d)', minWidth:'9rem'}}>
+        Get Started
+      </a>
+      <MetaLink name="docusaurOpsProjectRepository" label="View Repository"
+        fallback="Repository"
+        className="inline-flex items-center justify-center text-center px-6 py-2.5 rounded-lg font-semibold no-underline transition-opacity hover:opacity-90"
+        style={{background:'rgba(255,255,255,0.1)', color:'#f8fbff', border:'1px solid rgba(255,255,255,0.2)', minWidth:'9rem'}}
+      />
+    </div>
+  </div>
+</div>
+
+{/* ── Quick Links ─────────────────────────────────────────────────── */}
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10" id="overview">
+
+  <div className="rounded-xl p-6 border transition-shadow hover:shadow-lg"
+    style={{background:'var(--ifm-background-surface-color)', borderColor:'var(--ifm-toc-border-color)'}}>
+    <div className="text-3xl mb-3">🏗️</div>
+    <h3 className="font-bold text-lg mb-1" style={{color:'var(--ifm-heading-color)'}}>Architecture</h3>
+    <div className="text-sm mb-3" style={{color:'var(--ifm-font-color-secondary)'}}>
+      System design, diagrams, and key architectural decisions.
+    </div>
+    <a href={PAGE_CONFIG.architectureUrl} className="text-sm font-semibold" style={{color:'var(--ifm-color-primary)'}}>View document →</a>
+  </div>
+
+  <div className="rounded-xl p-6 border transition-shadow hover:shadow-lg"
+    style={{background:'var(--ifm-background-surface-color)', borderColor:'var(--ifm-toc-border-color)'}}>
+    <div className="text-3xl mb-3">🚀</div>
+    <h3 className="font-bold text-lg mb-1" style={{color:'var(--ifm-heading-color)'}}>Environments</h3>
+    <div className="text-sm mb-3" style={{color:'var(--ifm-font-color-secondary)'}}>
+      Staging and production deployment endpoints.
+    </div>
+    <div className="flex flex-col gap-1 text-sm">
+      <span><StatusBadge label="STG" color="#f59e0b" /> <a href={PAGE_CONFIG.stagingUrl} style={{color:'var(--ifm-color-primary)'}}>{ PAGE_CONFIG.stagingLabel}</a></span>
+      <span><StatusBadge label="PRD" color="#20c997" /> <a href={PAGE_CONFIG.productionUrl} style={{color:'var(--ifm-color-primary)'}}>{PAGE_CONFIG.productionLabel}</a></span>
+    </div>
+  </div>
+
+  <div className="rounded-xl p-6 border transition-shadow hover:shadow-lg"
+    style={{background:'var(--ifm-background-surface-color)', borderColor:'var(--ifm-toc-border-color)'}}>
+    <div className="text-3xl mb-3">📦</div>
+    <h3 className="font-bold text-lg mb-1" style={{color:'var(--ifm-heading-color)'}}>Repository</h3>
+    <div className="text-sm mb-3" style={{color:'var(--ifm-font-color-secondary)'}}>
+      Source code, issues, and contribution guidelines.
+    </div>
+    <MetaLink name="docusaurOpsProjectRepository" label="Open repository →" fallback="Repository not configured" />
+  </div>
+
+</div>
+
+{/* ── Objective ───────────────────────────────────────────────────── */}
+<div className="rounded-xl p-8 mb-10 border"
+  style={{background:'var(--ifm-background-surface-color)', borderColor:'var(--ifm-toc-border-color)'}}>
+  <h2 className="text-2xl font-bold mb-4" style={{color:'var(--ifm-heading-color)', fontFamily:'Space Grotesk, sans-serif'}}>
+    🎯 Objective
+  </h2>
+  <div className="mb-4" style={{color:'var(--ifm-font-color-secondary)'}}>
+    {PAGE_CONFIG.objectiveDescription}
+  </div>
+  <ul className="space-y-2 list-none pl-0 m-0">
+    {PAGE_CONFIG.goals.map(({title, description: desc}) => (
+      <li key={title} className="flex items-start gap-3">
+        <span className="mt-1 w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
+          style={{background:'var(--ifm-color-primary-lightest)', color:'var(--ifm-color-primary-darkest)'}}>✓</span>
+        <span style={{color:'var(--ifm-font-color-base)'}}><strong>{title}:</strong> {desc}</span>
+      </li>
+    ))}
+  </ul>
+</div>
+
+{/* ── Team ────────────────────────────────────────────────────────── */}
+<div className="rounded-xl p-8 mb-10 border"
+  style={{background:'var(--ifm-background-surface-color)', borderColor:'var(--ifm-toc-border-color)'}}>
+  <h2 className="text-2xl font-bold mb-6" style={{color:'var(--ifm-heading-color)', fontFamily:'Space Grotesk, sans-serif'}}>
+    👥 Project Team
+  </h2>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <h3 className="text-sm uppercase tracking-widest font-semibold mb-3" style={{color:'var(--ifm-color-primary)'}}>Leadership</h3>
+      <div className="space-y-2">
+        {[['Product Owner', PAGE_CONFIG.productOwner],['Project Manager', PAGE_CONFIG.projectManager]].map(([role,name]) => (
+          <div key={role} className="flex items-center justify-between py-2 border-b last:border-0"
+            style={{borderColor:'var(--ifm-hr-border-color)'}}>
+            <span className="text-sm" style={{color:'var(--ifm-font-color-secondary)'}}>{role}</span>
+            <span className="text-sm font-semibold" style={{color:'var(--ifm-font-color-base)'}}>{name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div>
+      <h3 className="text-sm uppercase tracking-widest font-semibold mb-3" style={{color:'var(--ifm-color-primary)'}}>Technical</h3>
+      <div className="space-y-2">
+        {[
+          ['Solution Architect', PAGE_CONFIG.solutionArchitect],
+          ['Lead Developer',     PAGE_CONFIG.leadDeveloper],
+          ['Developer(s)',       PAGE_CONFIG.developers],
+          ['QA / Tester',        PAGE_CONFIG.qaTester],
+          ['DevOps Engineer',    PAGE_CONFIG.devOpsEngineer],
+        ].map(([role,name]) => (
+          <div key={role} className="flex items-center justify-between py-2 border-b last:border-0"
+            style={{borderColor:'var(--ifm-hr-border-color)'}}>
+            <span className="text-sm" style={{color:'var(--ifm-font-color-secondary)'}}>{role}</span>
+            <span className="text-sm font-semibold" style={{color:'var(--ifm-font-color-base)'}}>{name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
